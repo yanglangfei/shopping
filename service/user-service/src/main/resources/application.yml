@@ -1,0 +1,36 @@
+server:
+  port: 7007
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${login.user_name}:${login.password}@peer1:8761/eureka/,http://${login.user_name}:${login.password}@peer2:8762/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+spring:
+  application:
+    name: service-user
+  h2:
+    console:
+      path: /h2-console  # h2 web consloe 路径
+      enabled: true   # 开启 h2 web consloe，默认为 false
+      settings:
+        web-allow-others: true  #允许远程访问 h2 web consloe
+  datasource:
+    username: sa
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+
+
+  datasource:
+    url: jdbc:mysql://47.104.243.201:3306/shoping
+    username: admin
+    password: admin123
+    driver-class-name: com.mysql.jdbc.Driver
+
+login:
+  user_name: admin
+  password: admin123

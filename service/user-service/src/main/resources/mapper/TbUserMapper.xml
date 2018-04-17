@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yf.userservice.mapper.TbUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.yf.userservice.model.TbUser">
+        <result column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="head_image" property="headImage"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+    </resultMap>
+
+    <!--基础列-->
+    <sql id="Base_Columns">
+        id,
+        user_name,
+        password,
+        head_image,
+        sex,
+        phone,
+        gmt_create,
+        gmt_modified
+    </sql>
+
+
+    <!--更新-->
+    <update id="update" parameterType="com.yf.userservice.model.TbUser" flushCache="false">
+        UPDATE tb_user
+        <set>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="headImage != null">
+                head_image = #{headImage},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <!--基础连接查询-->
+    <sql id="Base_Joins">
+
+    </sql>
+
+    <!--查询所有记录-->
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Columns"/>
+        FROM
+        tb_user a
+        WHERE  a.is_del!=1
+        ORDER BY
+        a.id DESC
+    </select>
+
+    <!--查询列表-->
+    <select id="findList" parameterType="Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Columns"/>
+        FROM
+        tb_user a
+        <where>
+            a.is_del!=1
+            <if test="userName != null">
+                AND a.user_name = #{userName}
+            </if>
+        </where>
+        ORDER BY
+        a.id DESC
+    </select>
+
+
+
+    <!--根据ID查询-->
+    <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Columns"/>
+        FROM tb_user a
+        <include refid="Base_Joins"/>
+        WHERE
+        a.id = #{id} AND   a.is_del!=1
+    </select>
+
+
+    <!--保存-->
+    <insert id="save" parameterType="com.yf.userservice.model.TbUser" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO tb_user(
+        <include refid="Base_Columns"></include>
+        ) VALUES (
+        #{id},
+        #{userName},
+        #{password},
+        #{headImage},
+        #{sex},
+        #{phone},
+        #{gmtCreate},
+        #{gmtModified}
+        )
+    </insert>
+
+
+    <!--删除   更新的时候不刷新缓存 -->
+    <update id="delete" parameterType="java.lang.Long" flushCache="false">
+        UPDATE
+        tb_user
+        SET
+        is_del = 1
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

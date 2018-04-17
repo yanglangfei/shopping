@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: eureak-server
+
+
+
+server:
+  port: 8761
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@peer2:8762/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: peer1
+
+
+
+#=========================================
+#           添加安全验证
+#=========================================
+security:
+  basic:
+    enabled: true
+  user:
+    password: admin123
+    name: admin
+
+
