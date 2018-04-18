@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org"
+            xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+            layout:decorate="layout">
+
+<head th:include="layout :: htmlhead" th:with="title='首页'">
+    <meta charset="utf-8" />
+    <title >index</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">内容主体区域.....</div>
+    </div>
+
+    <script src="../static/common/layui/layui.js" th:src="@{/common/layui/layui.js}"></script>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function() {
+            var element = layui.element;
+
+        });
+    </script>
+
+</div>
+
+</body>
+
+</html>
